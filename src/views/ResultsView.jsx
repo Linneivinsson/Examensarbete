@@ -8,7 +8,7 @@ function ResultsView({ userData, timeTaken }) {
       <p>Your results:</p>
       <ul>
         {timeTaken.map((time, index) => (
-          <li key={index}>Test {index + 1}: {time} ms</li>
+          <li key={index}>Test {index + 1}: {time} milliseconds</li>
         ))}
       </ul>
     </div>

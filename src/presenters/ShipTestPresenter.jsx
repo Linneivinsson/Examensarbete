@@ -2,16 +2,20 @@ import React from "react";
 import { ShipTestView } from "../views/ShipTestView.jsx";
 import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router-dom";
+import { saveTestResult } from "../firebaseModel.js";
 
 function ShipTestPresenter({ model }) {
   const navigate = useNavigate();
 
-  const saveResult = (duration) => {
-    model.timeTaken.push(duration); // Spara resultatet för aktuellt test
+  const saveResult = async (duration) => {
+    const soundFile = `noise${model.testNumber}.mp3`; // Ljudfil baserat på testnumret
+    const durationInSeconds = (duration / 1000).toFixed(2); // Konvertera till sekunder
+    await saveTestResult(model.userData, model.testNumber, durationInSeconds, soundFile); // Spara till Firestore
+    model.timeTaken.push(duration); // Spara lokalt resultat
   };
 
-  const onComplete = (duration) => {
-    saveResult(duration);
+  const onComplete = async (duration) => {
+    await saveResult(duration);
 
     if (model.testNumber < 4) {
       model.testNumber += 1; // Öka testnumret
@@ -31,6 +35,4 @@ function ShipTestPresenter({ model }) {
 
 ShipTestPresenter = observer(ShipTestPresenter);
 export { ShipTestPresenter };
-
-
 

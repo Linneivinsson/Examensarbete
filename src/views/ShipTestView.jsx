@@ -33,7 +33,7 @@ function ShipTestView({ testNumber, onComplete }) {
 
     // Generera nya par för testet
     const newPairs = [];
-    for (let i = 0; i < 300; i++) {
+    for (let i = 0; i < 300; i++) { //ändra till 300
       const isIdentical = Math.random() < 0.4;
       const shipType = Math.random() < 0.5 ? "ship1" : "ship2";
       newPairs.push({

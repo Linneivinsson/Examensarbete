@@ -12,7 +12,7 @@ class Model {
       email: "",
     };
     this.testNumber = 1;
-    this.timeTaken = [];
+    this.timeTaken = []; // Tiderna sparas i sekunder
     this.pairs = [];
     this.correctSelections = 0;
 
@@ -75,13 +75,13 @@ class Model {
   }
 
   completeTest(duration) {
-    this.saveTestResult(duration);
+    const durationInSeconds = (duration / 1000).toFixed(2); // Konvertera millisekunder till sekunder (två decimaler)
+    this.saveTestData(durationInSeconds); // Spara tid i sekunder
 
     if (this.testNumber === 4) {
       console.log("Alla tester är klara!", this.timeTaken);
     }
   }
-
   startNextTest() {
     if (this.testNumber < 4) {
       this.testNumber += 1; // Gå till nästa test
@@ -91,12 +91,14 @@ class Model {
     }
   }
 
-  saveTestResult(duration) {
-    this.timeTaken.push(duration);
-    saveTestResult(this.userData, this.testNumber, duration);
+  async saveTestData(durationInSeconds) {
+    const soundFile = `noise${this.testNumber}.mp3`; // Filnamn baserat på testnumret
+    await saveTestResult(this.userData, this.testNumber, durationInSeconds, soundFile);
+    this.timeTaken.push(durationInSeconds);
   }
 }
 
 const model = new Model();
 
 export { model };
+
