@@ -1,0 +1,118 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 20px;
+  background-color: white;
+}
+
+#testContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); /* Dynamisk grid för att skapa fulla rader */
+  gap: 10px; /* Mellanrum mellan par */
+  justify-content: center;
+  margin: 20px auto;
+  max-width: 100%; /* Fyll hela bredden av sidan */
+}
+
+.pair {
+  display: flex; /* Horisontellt arrangemang av skepp inom varje par */
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  background-color: white;
+  border: transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: border 0.2s;
+}
+
+.pair img {
+  max-width: 45%; /* Skeppen tar upp hälften av utrymmet inom paret */
+  max-height: 50px; /* Justera höjden */
+}
+
+.pair:hover {
+  border: 0.5px solid grey; /* Färg vid hover */
+}
+
+.selected {
+  border: 1px solid green; /* Markerar valda par */
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(44, 43, 43, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  max-width: 300px;
+  width: 80%;
+  text-align: center;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.modal-content h2 {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.login-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #0056b3;
+}
+.finish-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.finish-button:hover {
+  background-color: #0056b3;
+}
+
+.modal-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-button:hover {
+  background-color: #0056b3;
+}
