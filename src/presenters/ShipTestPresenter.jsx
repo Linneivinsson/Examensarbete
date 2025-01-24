@@ -11,9 +11,9 @@ function ShipTestPresenter({ model }) {
     model.generatePairs();
     console.log("Model pairs efter generatePairs:", model.pairs);
   }, [model.testNumber]);
-  
+
   const saveResult = async (duration) => {
-    const soundFile = `noise${model.testNumber}.mp3`;
+    const soundFile = model.getCurrentSound(); // Hämta aktuellt ljud
     const durationInSeconds = (duration / 1000).toFixed(2);
     await model.saveTestData(durationInSeconds);
   };

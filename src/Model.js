@@ -16,8 +16,21 @@ class Model {
     this.pairs = [];
     this.correctSelections = 0;
     this.identicalPairCount = 2; // Antalet identiska par per test
+    this.soundFiles = []; // Slumpad ljudordning för tester
 
     makeAutoObservable(this);
+
+    this.initializeSounds(); // Slumpa ljudordningen vid modellens skapande
+  }
+
+  initializeSounds() {
+    const sounds = ["noise1.mp3", "noise2.mp3", "noise3.mp3", "noise4.mp3"];
+    this.soundFiles = sounds.sort(() => Math.random() - 0.5);
+    console.log("Slumpad ljudordning:", this.soundFiles);
+  }
+
+  getCurrentSound() {
+    return this.soundFiles[this.testNumber - 1]; // Returnerar ljud för aktuellt test
   }
 
   updateUserData(data) {
@@ -64,7 +77,6 @@ class Model {
     console.log("Genererade par:", updatedPairs); // Lägg till loggning
     this.pairs = updatedPairs; // Uppdatera här
   }
-  
 
   selectPair(index) {
     const pair = this.pairs[index];
@@ -115,19 +127,27 @@ class Model {
   }
 
   async saveTestData(durationInSeconds) {
-    const soundFile = `noise${this.testNumber}.mp3`; // Filnamn baserat på testnumret
-    await saveTestResult(
-      this.userData,
-      this.testNumber,
-      durationInSeconds,
-      soundFile
-    );
+    const soundFile = this.getCurrentSound(); // Hämta aktuellt ljud för testet
+    const collectionName = soundFile.replace(".mp3", ""); // Ta bort filändelsen för att skapa samlingsnamn
+  
+    try {
+      await saveTestResult(
+        this.userData,
+        this.testNumber,
+        durationInSeconds,
+        soundFile,
+        collectionName // Skicka samlingsnamnet till funktionen
+      );
+      console.log(`Resultat sparat i ${collectionName}`);
+    } catch (error) {
+      console.error("Fel vid sparning av testresultat:", error);
+    }
+  
     this.timeTaken.push(durationInSeconds);
   }
+  
 }
 
 const model = new Model();
 
 export { model };
-
-

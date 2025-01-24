@@ -11,24 +11,20 @@ const ShipTestView = observer(({ testNumber, onComplete, model }) => {
   const [canProceed, setCanProceed] = useState(false);
 
   const playSound = () => {
-    if (testNumber < 1 || testNumber > 4) {
-      console.error(`Ogiltigt testnummer: ${testNumber}`);
-      return () => {};
-    }
-
-    const soundPath = `/noise/noise${testNumber}.mp3`;
+    const currentSound = model.getCurrentSound(); // Hämta aktuellt ljud
+    const soundPath = `/noise/${currentSound}`;
     console.log("Försöker spela ljud:", soundPath);
-
+  
     const audio = new Audio(soundPath);
     audio.loop = true;
-
+  
     audio.play()
       .then(() => console.log("Ljud spelas"))
       .catch((error) => console.error("Fel vid uppspelning av ljud:", error));
-
+  
     return () => audio.pause();
   };
-
+  
   useEffect(() => {
     const stopSound = playSound();
 

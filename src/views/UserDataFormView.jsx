@@ -1,77 +1,103 @@
 import React from "react";
-import "../style.css"; // Importera CSS-filen
+import "../style.css";
 
 function UserDataFormView({ formData, onChange, onSubmit }) {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2>Enter Your Details</h2>
+        <h2>Fyll i dina uppgifter</h2>
         <form onSubmit={onSubmit}>
+          {/* Fullständigt namn */}
           <div className="form-group">
-            <label>Full Name:</label>
+            <label htmlFor="fullName">Fullständigt namn:</label>
             <input
-              type="text"
+              id="fullName"
               name="fullName"
+              type="text"
               value={formData.fullName}
               onChange={onChange}
               className="user-input"
             />
           </div>
+
+          {/* Kön */}
           <div className="form-group">
-            <label>Gender:</label>
-            <input
-              type="text"
+            <label htmlFor="gender">Kön:</label>
+            <select
+              id="gender"
               name="gender"
               value={formData.gender}
               onChange={onChange}
               className="user-input"
-            />
+            >
+              <option value="">Välj kön</option>
+              <option value="Kvinna">Kvinna</option>
+              <option value="Man">Man</option>
+              <option value="Övrigt">Övrigt</option>
+            </select>
           </div>
+
+          {/* Ålder */}
           <div className="form-group">
-            <label>Age:</label>
+            <label htmlFor="age">Ålder:</label>
             <input
-              type="number"
+              id="age"
               name="age"
+              type="number"
               value={formData.age}
               onChange={onChange}
               className="user-input"
             />
           </div>
+
+          {/* År på KTH */}
           <div className="form-group">
-            <label>Year at KTH:</label>
-            <input
-              type="text"
+            <label htmlFor="year">År på KTH:</label>
+            <select
+              id="year"
               name="year"
               value={formData.year}
               onChange={onChange}
               className="user-input"
-            />
+            >
+              <option value="">Välj år</option>
+              {[1, 2, 3, 4, 5].map((year) => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              ))}
+            </select>
           </div>
+
+          {/* Program */}
           <div className="form-group">
-            <label>Program at KTH:</label>
+            <label htmlFor="program">Program på KTH:</label>
             <input
-              type="text"
+              id="program"
               name="program"
+              type="text"
               value={formData.program}
               onChange={onChange}
               className="user-input"
             />
           </div>
+
+          {/* E-postadress */}
           <div className="form-group">
-            <label>Email:</label>
+            <label htmlFor="email">E-postadress:</label>
             <input
-              type="email"
+              id="email"
               name="email"
+              type="email"
               value={formData.email}
               onChange={onChange}
               className="user-input"
             />
           </div>
-          <div className="button-group">
-            <button type="submit" className="login-button">
-              Vidare till testet
-            </button>
-          </div>
+
+          <button type="submit" className="login-button">
+            Vidare till testet
+          </button>
         </form>
       </div>
     </div>

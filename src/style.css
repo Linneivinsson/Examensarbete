@@ -1,5 +1,5 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Times New Roman', Times, serif;
   text-align: center;
   margin: 20px;
   background-color: white;
@@ -54,13 +54,13 @@ body {
 
 .modal-content {
   background: white;
-  padding: 20px;
-  max-width: 300px;
-  width: 80%;
-  text-align: center;
-  border: 1px solid #ddd;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  padding: 30px;
+  max-width: 400px;
+  width: 90%;
+  text-align: left;
+  border: none;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
 }
 
 .modal-content h2 {
@@ -68,22 +68,44 @@ body {
   font-size: 24px;
   color: #333;
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .login-button {
+  position: relative; /* För att placera knappen längst ner till vänster */
+  left: 110px;
+  margin: 10px;
   padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
   font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  font-family: "Times New Roman", Times, serif;
+  color: black;
+  background-color: transparent;
+  border: none;
+  transition: color 0.3s ease;
 }
 
 .login-button:hover {
-  background-color: #0056b3;
+  color: rgb(213, 213, 213);
 }
+
+.starttest-button {
+  font-family: "Times New Roman", Times, serif;
+  position: fixed; /* Fixerar knappen på en specifik plats */
+  bottom: 25px; /* Flyttar knappen 20px upp från botten */
+  right: 30px; /* Flyttar knappen 20px in från höger */
+  z-index: 1000; /* Säkerställer att den ligger över andra element */
+  background-color: transparent; /* Valfri bakgrundsfärg */
+  border: none; /* Lägger till en subtil kant */
+  text-align: center; /* Centrerar texten i knappen */
+  cursor: pointer; /* Gör muspekaren till en hand vid hover */
+  font-size: 18px;
+}
+
+.starttest-button:hover {
+  color: rgb(213, 213, 213);
+}
+
 .finish-button {
   position: fixed;
   bottom: 20px;
@@ -115,4 +137,36 @@ body {
 
 .modal-button:hover {
   background-color: #0056b3;
+}
+
+.form-group {
+  display: block;
+  position: relative;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 14px;
+  color: #000000;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.user-input {
+  font-family: "Times New Roman", Times, serif;
+  color: #000000;
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccd1d9;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.user-input:focus {
+  border-color: #5f5f5f;
+  outline: none;
+  box-shadow: 0 0 4px rgba(168, 168, 168, 0.5);
 }
