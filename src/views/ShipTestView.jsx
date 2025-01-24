@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { observer } from "mobx-react-lite";
 
-function ShipTestView({ testNumber, onComplete }) {
+const ShipTestView = observer(({ testNumber, onComplete, model }) => {
   const [pairs, setPairs] = useState([]);
   const [startTime, setStartTime] = useState(null);
   const [completed, setCompleted] = useState(false);
@@ -31,34 +32,31 @@ function ShipTestView({ testNumber, onComplete }) {
   useEffect(() => {
     const stopSound = playSound();
 
-    // Generera nya par för testet
-    const newPairs = [];
-    for (let i = 0; i < 300; i++) { //ändra till 300
-      const isIdentical = Math.random() < 0.4;
-      const shipType = Math.random() < 0.5 ? "ship1" : "ship2";
-      newPairs.push({
-        left: shipType,
-        right: isIdentical ? shipType : shipType === "ship1" ? "ship2" : "ship1",
-        selected: false,
-        isIdentical,
-      });
+    if (model.pairs.length === 0) {
+      console.error("Inga par är genererade i modellen.");
+    } else {
+      console.log("Model pairs i ShipTestView:", model.pairs);
+      setPairs(model.pairs); // Använd paren från modellen
     }
-    setPairs(newPairs);
+
     setStartTime(Date.now());
     setCompleted(false);
     setShowHelp(false);
 
     return stopSound; // Stoppa ljudet när komponenten avmonteras
-  }, [testNumber]);
+  }, [testNumber, model.pairs]); // Lägg till model.pairs som beroende
 
   const handleSelection = (index) => {
     const newPairs = pairs.slice();
     newPairs[index].selected = !newPairs[index].selected;
     setPairs(newPairs);
 
-    // Kontrollera om användaren kan gå vidare till nästa test
-    const wronglyMarked = newPairs.some((pair) => !pair.isIdentical && pair.selected);
-    const unmarkedIdentical = newPairs.some((pair) => pair.isIdentical && !pair.selected);
+    const wronglyMarked = newPairs.some(
+      (pair) => !pair.isIdentical && pair.selected
+    );
+    const unmarkedIdentical = newPairs.some(
+      (pair) => pair.isIdentical && !pair.selected
+    );
 
     if (!wronglyMarked && !unmarkedIdentical) {
       setCanProceed(true);
@@ -67,32 +65,6 @@ function ShipTestView({ testNumber, onComplete }) {
       setCompleted(true); // Markera testet som klart
     } else {
       setCanProceed(false); // Användaren kan inte gå vidare
-    }
-  };
-
-  const handleHelp = () => {
-    const unmarkedIdentical = pairs.filter((pair) => pair.isIdentical && !pair.selected).length > 0;
-    const wronglyMarked = pairs.filter((pair) => !pair.isIdentical && pair.selected).length > 0;
-
-    if (wronglyMarked) {
-      setHelpMessage("Du har felmarkerat par.");
-    } else if (unmarkedIdentical) {
-      setHelpMessage("Du har inte markerat alla identiska par.");
-    } else {
-      setHelpMessage("Allt ser korrekt ut!");
-    }
-    setShowHelp(true);
-  };
-
-  const closeHelp = () => {
-    setShowHelp(false);
-  };
-
-  const handleNext = () => {
-    if (canProceed) {
-      onComplete(duration); // Skicka resultatet vidare och navigera till nästa test
-    } else {
-      alert("Du måste rätta dina markeringar innan du går vidare.");
     }
   };
 
@@ -107,63 +79,48 @@ function ShipTestView({ testNumber, onComplete }) {
                 onClick={() => handleSelection(index)}
                 className={`pair ${pair.selected ? "selected" : ""}`}
               >
-                <img src={`/images/${pair.left}.svg`} alt="Left Ship" />
-                <img src={`/images/${pair.right}.svg`} alt="Right Ship" />
+                <img
+                  src={`/images/${pair.left}.svg`}
+                  alt="Left Ship"
+                  onError={() =>
+                    console.error(`Kunde inte ladda: /images/${pair.left}.svg`)
+                  }
+                />
+                <img
+                  src={`/images/${pair.right}.svg`}
+                  alt="Right Ship"
+                  onError={() =>
+                    console.error(`Kunde inte ladda: /images/${pair.right}.svg`)
+                  }
+                />
               </div>
             ))}
           </div>
-          <button
-            style={{
-              position: "fixed",
-              bottom: "10px",
-              right: "10px",
-              padding: "10px 20px",
-              backgroundColor: "#007bff",
-              color: "white",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer",
-            }}
-            onClick={handleHelp}
-          >
-            Hjälp
-          </button>
         </>
       )}
       {completed && canProceed && (
         <div className="modal-overlay">
           <div className="modal-content">
-            {testNumber < 4 ? (
+            {testNumber < 4 ? ( // Om det inte är sista testet
               <>
                 <h2>Nu vidare till nästa test</h2>
-                <button className="login-button" onClick={handleNext}>
+                <button className="login-button" onClick={() => onComplete(duration)}>
                   Nästa
                 </button>
               </>
-            ) : (
+            ) : ( // Om det är sista testet
               <>
-                <h2>Testerna är avslutade</h2>
-                <button className="login-button" onClick={handleNext}>
-                  Se resultat
+                <h2>Testen är klara</h2>
+                <button className="login-button" onClick={() => onComplete(duration)}>
+                  Gå till resultat
                 </button>
               </>
             )}
           </div>
         </div>
       )}
-      {showHelp && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <h2>Hjälp</h2>
-            <p>{helpMessage}</p>
-            <button className="login-button" onClick={closeHelp}>
-              Stäng
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
-}
+});
 
 export { ShipTestView };

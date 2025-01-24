@@ -1,40 +1,43 @@
-// Import the functions you need from the SDKs you need
+// Importera de funktioner du behöver från Firebase SDK
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 
-// Firebase Configuration
+// Din webapp's Firebase-konfiguration
 const firebaseConfig = {
-  apiKey: "AIzaSyBWU96nTYbIhX267hnjqM2QEtpCoOuN-o",
+  apiKey: "AIzaSyBWU96nTYbIhXG267hnjqM2QEtpCoOuN-o",
   authDomain: "examensarbete-ea1a9.firebaseapp.com",
+  databaseURL: "https://examensarbete-ea1a9-default-rtdb.europe-west1.firebasedatabase.app",
   projectId: "examensarbete-ea1a9",
-  storageBucket: "examensarbete-ea1a9.firebasestorage.app",
+  storageBucket: "examensarbete-ea1a9.appspot.com", // Fixad URL
   messagingSenderId: "436329343250",
   appId: "1:436329343250:web:a8529dbbb11ec1c88c2bcb",
   measurementId: "G-CP1TJLQKVG",
 };
 
-// Initialize Firebase
+// Initiera Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
-// Initialize Firestore
-const db = getFirestore(app);
+// Initiera Firestore
+const db = getFirestore(app); // Lägg till denna rad
 
-// Function to save test results
+// Funktion för att spara testresultat
 const saveTestResult = async (userData, testNumber, duration, soundFile) => {
   try {
-    // Define the collection for the current test
-    const testCollection = collection(db, `test${testNumber}`);
-    // Add a new document to the collection
-    await addDoc(testCollection, {
+    // Definiera samlingen för nuvarande testnummer
+    const collectionName = `noise${testNumber}`; // Dynamiskt samlingsnamn baserat på testnummer
+    const noiseCollection = collection(db, collectionName);
+    
+    // Lägg till ett nytt dokument till samlingen
+    await addDoc(noiseCollection, {
       ...userData,
       testNumber,
       duration,
       soundFile,
       timestamp: new Date().toISOString(),
     });
-    console.log(`Result saved in test${testNumber}`);
+    console.log(`Result saved in ${collectionName}`);
   } catch (error) {
     console.error("Error saving test result:", error);
   }

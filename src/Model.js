@@ -15,6 +15,7 @@ class Model {
     this.timeTaken = []; // Tiderna sparas i sekunder
     this.pairs = [];
     this.correctSelections = 0;
+    this.identicalPairCount = 2; // Antalet identiska par per test
 
     makeAutoObservable(this);
   }
@@ -30,19 +31,40 @@ class Model {
   }
 
   generatePairs() {
-    const newPairs = [];
-    for (let i = 0; i < 8; i++) {
-      const isIdentical = Math.random() < 0.25;
-      const shipType = Math.random() < 0.5 ? "ship1" : "ship2";
-      newPairs.push({
+    const shipTypes = ["ship1", "ship2"];
+    const totalPairs = 10;
+    const identicalPairCount = 4;
+  
+    const identicalPairs = [];
+    const nonIdenticalPairs = [];
+  
+    for (let i = 0; i < identicalPairCount; i++) {
+      const shipType = shipTypes[i % shipTypes.length];
+      identicalPairs.push({
         left: shipType,
-        right: isIdentical ? shipType : shipType === "ship1" ? "ship2" : "ship1",
+        right: shipType,
         selected: false,
-        isIdentical,
+        isIdentical: true,
       });
     }
-    this.pairs = newPairs;
+  
+    for (let i = 0; i < totalPairs - identicalPairCount; i++) {
+      const leftShip = shipTypes[i % shipTypes.length];
+      const rightShip = shipTypes[(i + 1) % shipTypes.length];
+      nonIdenticalPairs.push({
+        left: leftShip,
+        right: rightShip,
+        selected: false,
+        isIdentical: false,
+      });
+    }
+  
+    // Kombinera och uppdatera endast en gång
+    const updatedPairs = [...identicalPairs, ...nonIdenticalPairs].sort(() => Math.random() - 0.5);
+    console.log("Genererade par:", updatedPairs); // Lägg till loggning
+    this.pairs = updatedPairs; // Uppdatera här
   }
+  
 
   selectPair(index) {
     const pair = this.pairs[index];
@@ -82,6 +104,7 @@ class Model {
       console.log("Alla tester är klara!", this.timeTaken);
     }
   }
+
   startNextTest() {
     if (this.testNumber < 4) {
       this.testNumber += 1; // Gå till nästa test
@@ -93,7 +116,12 @@ class Model {
 
   async saveTestData(durationInSeconds) {
     const soundFile = `noise${this.testNumber}.mp3`; // Filnamn baserat på testnumret
-    await saveTestResult(this.userData, this.testNumber, durationInSeconds, soundFile);
+    await saveTestResult(
+      this.userData,
+      this.testNumber,
+      durationInSeconds,
+      soundFile
+    );
     this.timeTaken.push(durationInSeconds);
   }
 }
@@ -101,4 +129,5 @@ class Model {
 const model = new Model();
 
 export { model };
+
 
