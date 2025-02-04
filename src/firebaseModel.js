@@ -22,15 +22,16 @@ const analytics = getAnalytics(app);
 // Initiera Firestore
 const db = getFirestore(app); // Lägg till denna rad
 
-// Funktion för att spara testresultat
-const saveTestResult = async (userData, testNumber, duration, soundFile, collectionName) => {
+const saveTestResult = async (userData, testNumber, duration, soundFile, missedPairs, incorrectSelections, collectionName) => {
   try {
-    const noiseCollection = collection(db, collectionName); // Använd dynamiskt samlingsnamn
+    const noiseCollection = collection(db, collectionName);
     await addDoc(noiseCollection, {
       ...userData,
       testNumber,
       duration,
       soundFile,
+      missedPairs,
+      incorrectSelections,
       timestamp: new Date().toISOString(),
     });
     console.log(`Result sparat i samling: ${collectionName}`);
@@ -38,6 +39,7 @@ const saveTestResult = async (userData, testNumber, duration, soundFile, collect
     console.error("Error saving test result:", error);
   }
 };
+
 
 
 export { saveTestResult };
