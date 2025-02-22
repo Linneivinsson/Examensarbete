@@ -21,11 +21,11 @@ function ShipTestPresenter({ model }) {
   const onComplete = async (duration) => {
     await saveResult(duration);
 
-    if (model.testNumber < 5) { // Justera antalet tester till 5
-      model.startNextTest(); // Kalla på startNextTest
+    if (model.testNumber < 5) {
+      model.startNextTest();
       navigate(`/test/${model.testNumber}`);
     } else {
-      navigate("/results");
+      navigate("/control-questions");
     }
   };
 

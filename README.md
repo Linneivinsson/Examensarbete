@@ -5,19 +5,9 @@ LOVISA
 
 Linn
 - PROGRAMMERING
-    - Instruktion i början av testet
-    - Fixa så att ljuden slumpas men att alla ljud används (troligtvis klart)
-    - Spara differensen mellan varje test
-    - Fixa så att samma användare inte kan göra samma test två gånger
-    - Fixa så att alla test har exakt lika många identiska par (fixat) (Kom ihåg att ange hur många som ska vara identiska)
 
-    - Antalet fel man får
-    - Tiden det tar tills man klickar på klar
-    - lägg till klar knapp
-    - Spara fel i firebase
-    - alla rätt man har minus alla fel
+    - Se till så att ljuden faktiskt slumpas
+    - Se till så att local host test http går från 0-4 istället för 1-5
+    - Se till så att det inte är någon fördröjning mellan testen
+    - Se till så att informationen endast sparas i firestore om man slutfört alla steg
 
-
-    fixa så att antalet inkorrekta samt korrekta par sparas med rätt siffra i firestore
-    fixa så att tiden sparas korrekt i firestore
-    

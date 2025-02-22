@@ -1,5 +1,7 @@
+// Model.js
 import { makeAutoObservable } from "mobx";
 import { saveTestResult } from "./firebaseModel";
+import { toJS } from "mobx";
 
 class Model {
   constructor() {
@@ -10,6 +12,11 @@ class Model {
       year: "",
       program: "",
       email: "",
+    };
+    this.controlData = {
+      usedHeadphones: "",
+      testEnvironment: "",
+      computerVolume: "",
     };
     this.testNumber = 1;
     this.timeTaken = [];
@@ -31,13 +38,18 @@ class Model {
     this.soundFiles = ["noise0.mp3", ...sounds.sort(() => Math.random() - 0.5)];
     console.log("Slumpad ljudordning:", this.soundFiles);
   }
+  
 
   getCurrentSound() {
-    return this.soundFiles[this.testNumber - 1];
+    return this.soundFiles[this.testNumber - 1]; // Justerat för noise0-index
   }
 
   updateUserData(data) {
     this.userData = { ...data };
+  }
+
+  saveControlQuestions(data) {
+    this.controlData = { ...data };
   }
 
   startTest() {
@@ -81,29 +93,29 @@ class Model {
     this.pairs = [...identicalPairs, ...nonIdenticalPairs].sort(() => Math.random() - 0.5);
     console.log("Genererade par:", this.pairs);
   }
+
   selectPair(index) {
     const pair = this.pairs[index];
     if (!pair.selected) {
-        this.pairs[index].selected = true;
+      this.pairs[index].selected = true;
 
-        if (pair.isIdentical) {
-            this.correctSelections += 1;
-        } else {
-            this.incorrectSelections += 1; // Öka vid fel markering
-            console.log("Fel par markerat! incorrectSelections:", this.incorrectSelections);
-        }
+      if (pair.isIdentical) {
+        this.correctSelections += 1;
+      } else {
+        this.incorrectSelections += 1;
+        console.log("Fel par markerat! incorrectSelections:", this.incorrectSelections);
+      }
     } else {
-        this.pairs[index].selected = false; // Avmarkera par
-        if (pair.isIdentical) {
-            this.correctSelections -= 1;
-        } else {
-            if (this.incorrectSelections > 0) {
-                this.incorrectSelections -= 1; // Minska vid avmarkering av felaktig
-            }
+      this.pairs[index].selected = false;
+      if (pair.isIdentical) {
+        this.correctSelections -= 1;
+      } else {
+        if (this.incorrectSelections > 0) {
+          this.incorrectSelections -= 1;
         }
+      }
     }
-}
-
+  }
 
   startTimer() {
     this.startTime = Date.now();
@@ -111,8 +123,8 @@ class Model {
 
   completeTest(duration) {
     const durationInSeconds = duration.toFixed(2);
-    this.calculateMissedPairs(); // Beräkna antalet missade par
-    this.saveTestData(durationInSeconds);
+    this.calculateMissedPairs();
+    this.timeTaken.push(durationInSeconds);
 
     if (this.testNumber === 5) {
       console.log("Alla tester är klara!", this.timeTaken);
@@ -120,7 +132,6 @@ class Model {
   }
 
   calculateMissedPairs() {
-    // Räkna antalet identiska par som inte är markerade
     this.missedIdenticalPairs = this.pairs.filter(
       (pair) => pair.isIdentical && !pair.selected
     ).length;
@@ -137,30 +148,28 @@ class Model {
     }
   }
 
-  async saveTestData(durationInSeconds) {
-    if (this.testSaved) return;
-    this.testSaved = true;
-
-    const soundFile = this.getCurrentSound();
-    const collectionName = soundFile.replace(".mp3", "");
-
+  async saveTestData(durationInSeconds, testNumber) {
+    // Justera för att börja med noise0
+    const actualTestNumber = testNumber ?? (this.testNumber - 1); // -1 för att börja med noise0
+    const cleanControlData = toJS(this.controlData);
+    const soundFile = this.soundFiles[actualTestNumber]; // Direkt indexering
+  
     try {
       await saveTestResult(
         this.userData,
-        this.testNumber,
+        actualTestNumber, // Sparar som noise0, noise1, etc.
         durationInSeconds,
         soundFile,
-        this.missedIdenticalPairs, // Skickar korrekta värden
+        this.missedIdenticalPairs,
         this.incorrectSelections,
-        collectionName
+        cleanControlData
       );
-      console.log(`Resultat sparat i ${collectionName}`);
+      console.log(`Resultat sparat för test ${actualTestNumber}`);
     } catch (error) {
       console.error("Fel vid sparning av testresultat:", error);
     }
-
-    this.timeTaken.push(durationInSeconds);
   }
+  
 }
 
 const model = new Model();

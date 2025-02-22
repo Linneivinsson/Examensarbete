@@ -88,7 +88,73 @@ body {
 .login-button:hover {
   color: rgb(213, 213, 213);
 }
+.start-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
 
+.start-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.start-description {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.start-list,
+.start-sublist {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto 1rem;
+  text-align: left;
+  max-width: 600px;
+}
+
+.start-list li::before {
+  content: "•";
+  color: #555;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+
+.start-sublist li::before {
+  content: "◦";
+  color: #888;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0;
+}
+
+.test-image {
+  width: 80%;
+  max-width: 600px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.button-container {
+  margin-top: 2rem;
+}
 .starttest-button {
   font-family: "Times New Roman", Times, serif;
   position: fixed; /* Fixerar knappen på en specifik plats */

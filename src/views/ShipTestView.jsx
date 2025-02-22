@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { observer } from "mobx-react-lite";
 
 const ShipTestView = observer(({ testNumber, onComplete, model }) => {
   const [pairs, setPairs] = useState([]);
   const [startTime, setStartTime] = useState(null);
-  const [showModal, setShowModal] = useState(false); // Kontrollerar modalen
+  const [showModal, setShowModal] = useState(false);
   const [duration, setDuration] = useState(0);
+  const audioRef = useRef(null); // 🟢 Ref för att hålla ljudobjektet
 
   const playSound = () => {
     const currentSound = model.getCurrentSound();
@@ -16,6 +17,7 @@ const ShipTestView = observer(({ testNumber, onComplete, model }) => {
 
     const audio = new Audio(soundPath);
     audio.loop = true;
+    audioRef.current = audio;
 
     audio.play()
       .then(() => console.log("Ljud spelas"))
@@ -36,24 +38,28 @@ const ShipTestView = observer(({ testNumber, onComplete, model }) => {
 
     setStartTime(Date.now());
 
-    return stopSound; // Stoppa ljudet när komponenten avmonteras
+    return () => {
+      stopSound();
+      if (audioRef.current) audioRef.current.pause();
+    };
   }, [testNumber, model.pairs]);
 
   const handleSelection = (index) => {
-    model.selectPair(index); // Uppdatera modellen
-    setPairs([...model.pairs]); // Uppdatera state från modellen
-};
+    model.selectPair(index);
+    setPairs([...model.pairs]);
+  };
 
   const handleComplete = () => {
     const currentDuration = (Date.now() - startTime) / 1000;
-    setDuration(currentDuration); // Spara tiden
+    setDuration(currentDuration);
     model.completeTest(currentDuration);
-    setShowModal(true); // Visa modalen efter att "Klar" klickas
+    if (audioRef.current) audioRef.current.pause(); // 🟢 Stoppar ljudet
+    setShowModal(true);
   };
 
   const handleNextTest = () => {
-    setShowModal(false); // Dölj modalen
-    onComplete(duration); // Navigera vidare
+    setShowModal(false);
+    onComplete(duration);
   };
 
   return (
@@ -102,7 +108,7 @@ const ShipTestView = observer(({ testNumber, onComplete, model }) => {
               <>
                 <h2>Testen är klara</h2>
                 <button className="login-button" onClick={handleNextTest}>
-                  Gå till resultat
+                  Gå till kontrollfrågor
                 </button>
               </>
             )}
