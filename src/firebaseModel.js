@@ -28,7 +28,11 @@ const saveTestResult = async (
   soundFile,
   missedPairs,
   incorrectSelections,
-  controlData
+  controlData,
+  totalPairs,  
+  identicalPairCount,
+
+  
 ) => {
   try {
     const userCollection = collection(db, userData.email); // Använd e-post som unikt ID
@@ -39,7 +43,7 @@ const saveTestResult = async (
     // Spara kontrollfrågor
     await setDoc(doc(userCollection, "control questions"), controlData);
 
-    // 🟢 Använd soundFile som dokumentnamn (t.ex. noise3)
+    // Använd soundFile som dokumentnamn (t.ex. noise3)
     const soundFileName = soundFile.replace(".mp3", ""); // Ta bort .mp3 för att matcha dokumentnamn
     const noiseDocName = soundFileName; // Dokumentet döps efter ljudfilen
 
@@ -48,7 +52,9 @@ const saveTestResult = async (
       incorrectSelections,
       missedPairs,
       soundFile,        // För referens
-      testNumber,       // 🟢 Sparar testets ordningsnummer inuti dokumentet
+      testNumber: testNumber + 1,       
+      totalPairs,  // Sparar totalPairs i Firestore
+      identicalPairCount, // Sparar identicalPairCount i Firestore
       timestamp: new Date().toISOString(),
     });
 

@@ -10,8 +10,6 @@ const ShipTestView = observer(({ testNumber, onComplete, model }) => {
 
   const playSound = () => {
     const currentSound = model.getCurrentSound();
-    if (currentSound === "noise0.mp3") return () => {}; // Inget ljud spelas för noise0
-
     const soundPath = `/noise/${currentSound}`;
     console.log("Försöker spela ljud:", soundPath);
 
@@ -97,7 +95,7 @@ const ShipTestView = observer(({ testNumber, onComplete, model }) => {
       {showModal && (
         <div className="modal-overlay">
           <div className="modal-content">
-            {testNumber < 5 ? (
+            {testNumber < 4 ? (
               <>
                 <h2>Nu vidare till nästa test</h2>
                 <button className="login-button" onClick={handleNextTest}>

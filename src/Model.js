@@ -35,13 +35,13 @@ class Model {
 
   initializeSounds() {
     const sounds = ["noise1.mp3", "noise2.mp3", "noise3.mp3", "noise4.mp3"];
-    this.soundFiles = ["noise0.mp3", ...sounds.sort(() => Math.random() - 0.5)];
+    this.soundFiles = [...sounds.sort(() => Math.random() - 0.5)];
     console.log("Slumpad ljudordning:", this.soundFiles);
   }
   
 
   getCurrentSound() {
-    return this.soundFiles[this.testNumber - 1]; // Justerat för noise0-index
+    return this.soundFiles[this.testNumber]; 
   }
 
   updateUserData(data) {
@@ -63,8 +63,9 @@ class Model {
 
   generatePairs() {
     const shipTypes = ["ship1", "ship2"];
-    const totalPairs = 10;
-    const identicalPairCount = 4;
+    const totalPairs = 300;
+    const identicalPairCount = 50;
+    this.identicalPairCount = identicalPairCount; 
 
     const identicalPairs = [];
     const nonIdenticalPairs = [];
@@ -88,6 +89,7 @@ class Model {
         selected: false,
         isIdentical: false,
       });
+      
     }
 
     this.pairs = [...identicalPairs, ...nonIdenticalPairs].sort(() => Math.random() - 0.5);
@@ -126,7 +128,7 @@ class Model {
     this.calculateMissedPairs();
     this.timeTaken.push(durationInSeconds);
 
-    if (this.testNumber === 5) {
+    if (this.testNumber === 4) {
       console.log("Alla tester är klara!", this.timeTaken);
     }
   }
@@ -139,7 +141,7 @@ class Model {
   }
 
   startNextTest() {
-    if (this.testNumber < 5) {
+    if (this.testNumber < 4) {
       this.testNumber += 1;
       console.log(`Startar nästa test, testnummer: ${this.testNumber}`);
       this.startTest();
@@ -150,7 +152,7 @@ class Model {
 
   async saveTestData(durationInSeconds, testNumber) {
     // Justera för att börja med noise0
-    const actualTestNumber = testNumber ?? (this.testNumber - 1); // -1 för att börja med noise0
+    const actualTestNumber = testNumber ?? (this.testNumber); // -1 för att börja med noise0
     const cleanControlData = toJS(this.controlData);
     const soundFile = this.soundFiles[actualTestNumber]; // Direkt indexering
   
@@ -162,7 +164,13 @@ class Model {
         soundFile,
         this.missedIdenticalPairs,
         this.incorrectSelections,
-        cleanControlData
+        cleanControlData,
+        this.pairs.length,  // totalPairs (räknar antalet genererade par)
+        this.identicalPairCount // identicalPairCount (lagrat i modellen)
+    
+
+
+        
       );
       console.log(`Resultat sparat för test ${actualTestNumber}`);
     } catch (error) {

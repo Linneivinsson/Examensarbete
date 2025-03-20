@@ -21,7 +21,7 @@ function ShipTestPresenter({ model }) {
   const onComplete = async (duration) => {
     await saveResult(duration);
 
-    if (model.testNumber < 5) {
+    if (model.testNumber < 4) {
       model.startNextTest();
       navigate(`/test/${model.testNumber}`);
     } else {
