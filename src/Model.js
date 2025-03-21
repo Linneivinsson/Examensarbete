@@ -34,14 +34,19 @@ class Model {
   }
 
   initializeSounds() {
-    const sounds = ["noise1.mp3", "noise2.mp3", "noise3.mp3", "noise4.mp3"];
+    const sounds = ["no_noise1.mp3", "low_entropy_noise2.mp3", "medium_entropy_noise3.mp3", "high_entropy_noise4.mp3"];
     this.soundFiles = [...sounds.sort(() => Math.random() - 0.5)];
     console.log("Slumpad ljudordning:", this.soundFiles);
   }
   
 
   getCurrentSound() {
-    return this.soundFiles[this.testNumber]; 
+    // skyddar mot testNumber utanför gränser
+    if (this.testNumber < 1 || this.testNumber > this.soundFiles.length) {
+      console.warn("Ogiltigt testNumber:", this.testNumber);
+      return null;
+    }
+    return this.soundFiles[this.testNumber - 1];
   }
 
   updateUserData(data) {
@@ -154,7 +159,8 @@ class Model {
     // Justera för att börja med noise0
     const actualTestNumber = testNumber ?? (this.testNumber); // -1 för att börja med noise0
     const cleanControlData = toJS(this.controlData);
-    const soundFile = this.soundFiles[actualTestNumber]; // Direkt indexering
+    const soundFile = this.soundFiles[actualTestNumber]; // eller fixad indexering
+
   
     try {
       await saveTestResult(

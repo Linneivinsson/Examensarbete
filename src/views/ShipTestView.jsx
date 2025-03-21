@@ -10,37 +10,49 @@ const ShipTestView = observer(({ testNumber, onComplete, model }) => {
 
   const playSound = () => {
     const currentSound = model.getCurrentSound();
+    if (!currentSound) {
+      console.error("Inget giltigt ljud att spela");
+      return;
+    }
+  
     const soundPath = `/noise/${currentSound}`;
     console.log("Försöker spela ljud:", soundPath);
-
+  
+    if (audioRef.current) {
+      audioRef.current.pause();
+    }
+  
     const audio = new Audio(soundPath);
     audio.loop = true;
     audioRef.current = audio;
-
+  
     audio.play()
       .then(() => console.log("Ljud spelas"))
       .catch((error) => console.error("Fel vid uppspelning av ljud:", error));
-
-    return () => audio.pause();
   };
+  
 
   useEffect(() => {
-    const stopSound = playSound();
-
+    playSound(); // Spela ljudet för detta test
+  
     if (model.pairs.length === 0) {
       console.error("Inga par är genererade i modellen.");
     } else {
       console.log("Model pairs i ShipTestView:", model.pairs);
       setPairs(model.pairs);
     }
-
+  
     setStartTime(Date.now());
-
+  
     return () => {
-      stopSound();
-      if (audioRef.current) audioRef.current.pause();
+      // Stoppa ljudet när komponenten avmonteras eller testet ändras
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
     };
   }, [testNumber, model.pairs]);
+  
 
   const handleSelection = (index) => {
     model.selectPair(index);
