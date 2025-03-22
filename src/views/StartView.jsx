@@ -39,6 +39,7 @@ function StartView({ onNavigateToLogin }) {
 
       <h2 className="section-title">Tips för bästa resultat:</h2>
       <ul className="start-list">
+      <li>Se till så att du redan innan du börjar testet har ljudet påslaget på datorn, gärna på medelvolym</li>
         <li>Se till att ha samma ljudnivå på datorn för alla testerna.</li>
         <li>Använd hörlurar för att säkerställa att du hör ljudmiljöerna tydligt.</li>
         <li>Välj en lugn miljö för att minimera störningar utanför själva testet.</li>
