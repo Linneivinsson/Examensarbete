@@ -4,7 +4,10 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: 5175, // Se till att detta matchar porten du försöker öppna
+    port: 5175,
   },
-  base: "./", // Viktigt om du använder relativ sökväg
+  base: "./", // Viktigt för Firebase + HashRouter
+  build: {
+    outDir: 'dist'  // <-- Detta styr att mappen heter "dist"
+  }
 });
