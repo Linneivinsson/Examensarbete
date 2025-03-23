@@ -12,21 +12,21 @@ function ShipTestPresenter({ model }) {
     console.log("Model pairs efter generatePairs:", model.pairs);
   }, [model.testNumber]);
 
-  const saveResult = async (duration) => {
-    const soundFile = model.getCurrentSound(); // Hämta aktuellt ljud
-    const durationInSeconds = (duration / 1000).toFixed(2);
-    await model.saveTestData(durationInSeconds);
-  };
-
   const onComplete = async (duration) => {
-    await saveResult(duration);
-
+    const durationInSeconds = duration.toFixed(2);
+  
+    const correctSelections = model.correctSelections;
+    const incorrectSelections = model.incorrectSelections;
+  
+    await model.saveTestData(durationInSeconds, model.testNumber, correctSelections, incorrectSelections);
+  
     if (model.testNumber < 4) {
       model.startNextTest();
       navigate(`/test/${model.testNumber}`);
     } else {
       navigate("/control-questions");
     }
+  
   };
 
   return (
@@ -36,4 +36,3 @@ function ShipTestPresenter({ model }) {
 
 ShipTestPresenter = observer(ShipTestPresenter);
 export { ShipTestPresenter };
-

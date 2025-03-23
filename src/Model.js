@@ -130,20 +130,14 @@ class Model {
 
   completeTest(duration) {
     const durationInSeconds = duration.toFixed(2);
-    this.calculateMissedPairs();
+    // this.calculateMissedPairs();  // tas bort
     this.timeTaken.push(durationInSeconds);
-
+  
     if (this.testNumber === 4) {
       console.log("Alla tester är klara!", this.timeTaken);
     }
   }
-
-  calculateMissedPairs() {
-    this.missedIdenticalPairs = this.pairs.filter(
-      (pair) => pair.isIdentical && !pair.selected
-    ).length;
-    console.log("Missade identiska par:", this.missedIdenticalPairs);
-  }
+  
 
   startNextTest() {
     if (this.testNumber < 4) {
@@ -155,34 +149,29 @@ class Model {
     }
   }
 
-  async saveTestData(durationInSeconds, testNumber) {
-    // Justera för att börja med noise0
-    const actualTestNumber = testNumber ?? (this.testNumber); // -1 för att börja med noise0
+  async saveTestData(durationInSeconds, testNumber, correctSelections, incorrectSelections) {
+    const actualTestNumber = testNumber ?? this.testNumber;
     const cleanControlData = toJS(this.controlData);
-    const soundFile = this.soundFiles[actualTestNumber]; // eller fixad indexering
-
+    const soundFile = this.soundFiles[actualTestNumber - 1];
   
     try {
       await saveTestResult(
         this.userData,
-        actualTestNumber, // Sparar som noise0, noise1, etc.
+        actualTestNumber,
         durationInSeconds,
         soundFile,
-        this.missedIdenticalPairs,
-        this.incorrectSelections,
+        correctSelections,
+        incorrectSelections,
         cleanControlData,
-        this.pairs.length,  // totalPairs (räknar antalet genererade par)
-        this.identicalPairCount // identicalPairCount (lagrat i modellen)
-    
-
-
-        
+        this.pairs.length,
+        this.identicalPairCount
       );
       console.log(`Resultat sparat för test ${actualTestNumber}`);
     } catch (error) {
       console.error("Fel vid sparning av testresultat:", error);
     }
   }
+  
   
 }
 

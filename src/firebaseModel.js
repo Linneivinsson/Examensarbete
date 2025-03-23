@@ -26,7 +26,7 @@ const saveTestResult = async (
   testNumber,
   duration,
   soundFile,
-  missedPairs,
+  correctSelections,
   incorrectSelections,
   controlData,
   totalPairs,  
@@ -50,9 +50,9 @@ const saveTestResult = async (
     await setDoc(doc(userCollection, noiseDocName), {
       duration,
       incorrectSelections,
-      missedPairs,
+      correctSelections,
       soundFile,        // För referens
-      testNumber: testNumber + 1,       
+      testNumber,       
       totalPairs,  // Sparar totalPairs i Firestore
       identicalPairCount, // Sparar identicalPairCount i Firestore
       timestamp: new Date().toISOString(),
