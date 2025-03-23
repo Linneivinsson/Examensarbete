@@ -1,7 +1,27 @@
-// ControlQuestionsView.jsx
-import React from "react";
+import React, { useEffect } from "react";
+import "../style.css";
 
 function ControlQuestionsView({ formData, onChange, onSubmit }) {
+  useEffect(() => {
+    const inputs = document.querySelectorAll(".user-input");
+    inputs.forEach((input) => {
+      const checkFilled = () => {
+        if (input.value.trim() !== "") {
+          input.classList.add("filled");
+        } else {
+          input.classList.remove("filled");
+        }
+      };
+
+      input.addEventListener("input", checkFilled);
+      checkFilled(); // kör direkt vid mount
+
+      return () => {
+        input.removeEventListener("input", checkFilled);
+      };
+    });
+  }, []);
+
   return (
     <div className="modal-overlay">
       <div className="modal-content">
@@ -13,7 +33,7 @@ function ControlQuestionsView({ formData, onChange, onSubmit }) {
               id="usedHeadphones"
               name="usedHeadphones"
               value={formData.usedHeadphones}
-              onChange={onChange} // Direkt koppling till onChange
+              onChange={onChange}
               className="user-input"
             >
               <option value="">Välj</option>
@@ -30,24 +50,25 @@ function ControlQuestionsView({ formData, onChange, onSubmit }) {
               name="testEnvironment"
               type="text"
               value={formData.testEnvironment}
-              onChange={onChange} // Direkt koppling till onChange
-              className="user-input"
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="infoEnvironment">Beskriv i vilken miljö gjorde du testerna?</label>
-            <input
-              id="infoEnvironment"
-              name="infoEnvironment"
-              type="text"
-              value={formData.infoEnvironment}
-              onChange={onChange} // Direkt koppling till onChange
+              onChange={onChange}
               className="user-input"
             />
           </div>
 
           <div className="form-group">
-            <label htmlFor="testDistractions">Hur mycket distraktion fanns runt omkring, 1 lågt, 5 högt</label>
+            <label htmlFor="infoEnvironment">Beskriv miljön närmare:</label>
+            <input
+              id="infoEnvironment"
+              name="infoEnvironment"
+              type="text"
+              value={formData.infoEnvironment}
+              onChange={onChange}
+              className="user-input"
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="testDistractions">Hur mycket distraktion fanns runt omkring? (1=lågt, 5=högt)</label>
             <select
               id="testDistractions"
               name="testDistractions"
@@ -56,14 +77,13 @@ function ControlQuestionsView({ formData, onChange, onSubmit }) {
               className="user-input"
             >
               <option value="">Välj 1 till 5</option>
-              {[1, 2, 3, 4, 5].map((testDistractions) => (
-                <option key={testDistractions} value={testDistractions}>
-                  {testDistractions}
+              {[1, 2, 3, 4, 5].map((val) => (
+                <option key={val} value={val}>
+                  {val}
                 </option>
               ))}
             </select>
           </div>
-          
 
           <div className="form-group">
             <label htmlFor="computerVolume">Vilken ljudnivå hade du på din dator under testerna?</label>
@@ -72,7 +92,7 @@ function ControlQuestionsView({ formData, onChange, onSubmit }) {
               name="computerVolume"
               type="text"
               value={formData.computerVolume}
-              onChange={onChange} // Direkt koppling till onChange
+              onChange={onChange}
               className="user-input"
             />
           </div>

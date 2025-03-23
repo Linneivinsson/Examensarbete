@@ -1,7 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../style.css";
 
 function UserDataFormView({ formData, onChange, onSubmit }) {
+  useEffect(() => {
+    const inputs = document.querySelectorAll(".user-input");
+    inputs.forEach((input) => {
+      const checkFilled = () => {
+        if (input.value.trim() !== "") {
+          input.classList.add("filled");
+        } else {
+          input.classList.remove("filled");
+        }
+      };
+
+      input.addEventListener("input", checkFilled);
+      checkFilled(); // Kör direkt
+
+      return () => {
+        input.removeEventListener("input", checkFilled);
+      };
+    });
+  }, []);
+
   return (
     <div className="modal-overlay">
       <div className="modal-content">

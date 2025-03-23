@@ -99,7 +99,7 @@ const ShipTestView = observer(({ testNumber, onComplete, model }) => {
             </div>
           ))}
           <button className="finish-button" onClick={handleComplete}>
-            Klar
+          Klart
           </button>
         </div>
       )}
@@ -110,14 +110,14 @@ const ShipTestView = observer(({ testNumber, onComplete, model }) => {
             {testNumber < 4 ? (
               <>
                 <h2>Nu vidare till nästa test</h2>
-                <button className="login-button" onClick={handleNextTest}>
+                <button className="next-button" onClick={handleNextTest}>
                   Nästa
                 </button>
               </>
             ) : (
               <>
                 <h2>Testen är klara</h2>
-                <button className="login-button" onClick={handleNextTest}>
+                <button className="next-button" onClick={handleNextTest}>
                   Gå till kontrollfrågor
                 </button>
               </>

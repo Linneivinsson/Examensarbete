@@ -1,18 +1,32 @@
 import React from "react";
+import "../style.css";
 
 function ResultsView({ userData, timeTaken }) {
   return (
-    <div>
-      <h1>Test Resultat</h1>
-      <p>Tack för din medverkan, {userData.fullName}!</p>
-      <p>Dina testresultat är:</p>
-      <ul>
-        {timeTaken.map((time, index) => (
-          <li key={index}>Test {index + 1}: {time} sekunder</li>
-        ))}
-      </ul>
+    <div className="results-container">
+      <h1 className="results-title">Testresultat</h1>
+      <p className="thanks-text">Tack för din medverkan, {userData.fullName}!</p>
+      <p className="results-subtitle">Dina testresultat:</p>
+
+      <table className="results-table">
+        <thead>
+          <tr>
+            <th>Testnummer</th>
+            <th>Tid (sekunder)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {timeTaken.map((time, index) => (
+            <tr key={index}>
+              <td>{index + 1}</td>
+              <td>{time}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
 
 export { ResultsView };
+

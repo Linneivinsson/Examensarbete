@@ -97,9 +97,46 @@ class Model {
       
     }
 
-    this.pairs = [...identicalPairs, ...nonIdenticalPairs].sort(() => Math.random() - 0.5);
-    console.log("Genererade par:", this.pairs);
+  // Shuffle identiska par för variation
+  for (let i = identicalPairs.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [identicalPairs[i], identicalPairs[j]] = [identicalPairs[j], identicalPairs[i]];
   }
+
+  // Skapa en lista med positioner där vi ska placera identiska par
+  const positions = new Set();
+  let minSpacing = 4; // minsta avstånd mellan identiska par
+  let maxSpacing = 10; // största avstånd (ger möjlighet till variation)
+
+  let currentPos = Math.floor(Math.random() * minSpacing); // starta lite slumpmässigt
+
+  for (let i = 0; i < identicalPairCount; i++) {
+    currentPos += Math.floor(Math.random() * (maxSpacing - minSpacing + 1)) + minSpacing;
+    if (currentPos >= totalPairs) break;
+    positions.add(currentPos);
+  }
+
+  // Fyll på med ytterligare positioner om vi inte hunnit lägga alla
+  while (positions.size < identicalPairCount) {
+    const pos = Math.floor(Math.random() * totalPairs);
+    positions.add(pos);
+  }
+
+  const finalPairs = [];
+  let identicalIndex = 0;
+  let nonIdenticalIndex = 0;
+
+  for (let i = 0; i < totalPairs; i++) {
+    if (positions.has(i) && identicalIndex < identicalPairs.length) {
+      finalPairs.push(identicalPairs[identicalIndex++]);
+    } else if (nonIdenticalIndex < nonIdenticalPairs.length) {
+      finalPairs.push(nonIdenticalPairs[nonIdenticalIndex++]);
+    }
+  }
+
+  this.pairs = finalPairs;
+  console.log("Genererade par med varierad men balanserad fördelning:", this.pairs);
+}
 
   selectPair(index) {
     const pair = this.pairs[index];
