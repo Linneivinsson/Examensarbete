@@ -62,7 +62,7 @@ function StartView({ onNavigateToLogin }) {
         </button>
       </div>
       <div className="button-container">
-        <button className="starttest-button" onClick={onNavigateToLogin}>
+        <button className="starttest-button" onClick={handleStartClick}>
           Starta testet
         </button>
       </div>
