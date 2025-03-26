@@ -43,20 +43,9 @@ function ControlQuestionsView({ formData, onChange, onSubmit }) {
             </select>
           </div>
 
-          <div className="form-group">
-            <label htmlFor="testEnvironment">I vilken miljö gjorde du testerna?</label>
-            <input
-              id="testEnvironment"
-              name="testEnvironment"
-              type="text"
-              value={formData.testEnvironment}
-              onChange={onChange}
-              className="user-input"
-            />
-          </div>
 
           <div className="form-group">
-            <label htmlFor="infoEnvironment">Beskriv miljön närmare:</label>
+            <label htmlFor="infoEnvironment">Beskriv i vilken miljö du gjorde testerna:</label>
             <input
               id="infoEnvironment"
               name="infoEnvironment"
