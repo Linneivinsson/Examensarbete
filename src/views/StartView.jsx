@@ -56,7 +56,7 @@ function StartView({ onNavigateToLogin }) {
       <h2 className="section-title">Testa ljudvolym</h2>
       <p>Lyssna på ljuden nedan, och hitta ett bekvämt volymläge.</p>
       <div className="audio-player">
-        <audio ref={audioRef} src="public/noise/testsound.mp3" />
+        <audio ref={audioRef} src="/public/sounds/testsound.mp3" />
         <button className="starttest-button" onClick={toggleAudio}>
           {isPlaying ? "⏸ Pausa ljud" : "▶ Spela upp ljud"}
         </button>
