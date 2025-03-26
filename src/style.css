@@ -7,36 +7,49 @@ body {
 
 #testContainer {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); /* Dynamisk grid för att skapa fulla rader */
-  gap: 10px; /* Mellanrum mellan par */
+  grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+  row-gap: 4px;       /* ← styr vertikal spacing exakt */
+  column-gap: 2px;    /* ← vågrätt spacing */
   justify-content: center;
-  margin: 20px auto;
-  max-width: 100%; /* Fyll hela bredden av sidan */
+  margin: 10px auto;
+  max-width: 100%;
 }
+
 
 .pair {
-  display: flex; /* Horisontellt arrangemang av skepp inom varje par */
-  justify-content: space-between;
+  display: flex;
+  justify-content: center;
   align-items: center;
-  padding: 5px;
+  gap: 4px;
+  padding: 0;                 /* ingen extra space inuti */
+  margin: 0;                  /* ta bort ev. extra marginaler */
   background-color: white;
-  border: 1px solid transparent; /* ← viktig! */
-  border-radius: 4px;
+  border: 1px solid transparent;
+  border-radius: 3px;
   cursor: pointer;
-  transition: border 0.01s;
+  transition: border-color 0.2s ease;
+  height: 20px;               /* ← Begränsa höjden! */
+  overflow: hidden;           /* Hindra innehåll från att tänja ut rutan */
 }
+
+
 
 .pair img {
-  max-width: 45%; /* Skeppen tar upp hälften av utrymmet inom paret */
-  max-height: 50px; /* Justera höjden */
+  max-width: 30%;
+  max-height: 26px;    /* mindre än .pair height */
+  display: block;
+  object-fit: contain;
+  margin: 0;
+  padding: 0;
 }
 
+
 .pair:hover {
-  border: 0.5px solid rgb(37, 37, 37); /* Färg vid hover */
+  border-color: rgb(37, 37, 37); /* Samma bredd som innan, bara ändrar färg */
 }
 
 .selected {
-  border: 1px solid rgb(0, 153, 0); /* Markerar valda par */
+  border-color: rgb(0, 153, 0); /* Samma här */
 }
 
 .modal-overlay {

@@ -6,10 +6,10 @@ function StartView({ onNavigateToLogin }) {
     <div className="start-container">
       <h1 className="start-title">Instruktioner för Testet – Musikens Entropi och Omedelbar Koncentration</h1>
       <p className="start-description">
-        Detta test syftar till att undersöka hur ljud med olika entropi påverkar
-        direkt koncentration och prestation vid kortare uppgifter. Genom att analysera
-        reaktionstid och noggrannhet under varierande ljudförhållanden får vi
-        en inblick i hur bakgrundsmusik kan påverka din omedelbara uppmärksamhet.
+      Detta test syftar till att undersöka hur ljud med olika entropi påverkar
+      direkt koncentration och prestation vid kortare uppgifter. Du kommer att genomföra
+    samma test i fyra olika ljudmiljöer. Syftet är att se ett samband mellan musikens entropi
+    och omedelbar koncentration för att kunna optimera ljudmiljön för bästa fokus 
       </p>
 
       <h2 className="section-title">Så går testet till</h2>
@@ -27,7 +27,7 @@ function StartView({ onNavigateToLogin }) {
         <img src="/images/TestShip_infobild.jpg" alt="Testbild" className="test-image" />
       </div>
 
-      <h2 className="section-title">Tips och instruktioner inför testet:</h2>
+      <h2 className="section-title">Innan du börjar testet:</h2>
       <ul className="start-list">
       <li>Hela testet tar 5-10 minuter att genomföra. Du kan inte avbryta testet under tidens gång.</li>
       <li>Se till så att du redan innan du börjar testet har ljudet påslaget på datorn, gärna på medelvolym</li>

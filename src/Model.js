@@ -68,8 +68,8 @@ class Model {
 
   generatePairs() {
     const shipTypes = ["ship1", "ship2"];
-    const totalPairs = 300;
-    const identicalPairCount = 50;
+    const totalPairs = 550;
+    const identicalPairCount = 100;
     this.identicalPairCount = identicalPairCount; 
 
     const identicalPairs = [];
