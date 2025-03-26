@@ -55,6 +55,17 @@ function ControlQuestionsView({ formData, onChange, onSubmit }) {
               className="user-input"
             />
           </div>
+          <div className="form-group">
+            <label htmlFor="unplannedDistractions">Hände något oväntat under testets gång som kan ha påverkat resultatet?</label>
+            <input
+              id="unplannedDistractions"
+              name="unplannedDistractions"
+              type="text"
+              value={formData.unplannedDistractions}
+              onChange={onChange}
+              className="user-input"
+            />
+          </div>
 
           <div className="form-group">
             <label htmlFor="testDistractions">Hur mycket distraktion fanns runt omkring? (1=lågt, 5=högt)</label>

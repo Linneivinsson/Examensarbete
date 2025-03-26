@@ -7,6 +7,10 @@ function ControlQuestionsPresenter({ model }) {
     usedHeadphones: "",
     infoEnvironment: "",
     computerVolume: "",
+    testDistractions: "",
+    unplannedDistractions: "",
+
+
   });
 
   const navigate = useNavigate();

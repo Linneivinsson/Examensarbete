@@ -9,11 +9,12 @@ function StartView({ onNavigateToLogin }) {
       Detta test syftar till att undersöka hur ljud med olika entropi påverkar
       direkt koncentration och prestation vid kortare uppgifter. Du kommer att genomföra
     samma test i fyra olika ljudmiljöer. Syftet är att se ett samband mellan musikens entropi
-    och omedelbar koncentration för att kunna optimera ljudmiljön för bästa fokus 
+    och omedelbar koncentration för att kunna optimera ljudmiljön för bästa fokus. 
       </p>
 
       <h2 className="section-title">Så går testet till</h2>
       <ul className="start-list">
+      <li>Du kommer göra fyra tester i olika ljudmiljöer, varav en är tyst</li>
         <li>Uppgiften är att para ihop identiska par så snabbt som möjligt.</li>
         <li>Du kommer att se flera skepp på skärmen. Målet är att identifiera alla identiska par.</li>
         <li>Klicka på skepp för att markera dem som ett par. Om du vill avmarkera ett skepp, klicka på det igen.</li>
