@@ -6,9 +6,10 @@ function ControlQuestionsPresenter({ model }) {
   const [controlData, setControlData] = useState({
     usedHeadphones: "",
     infoEnvironment: "",
-    computerVolume: "",
+    clearVolume: "",
     testDistractions: "",
     unplannedDistractions: "",
+    volumeChange: "",
 
 
   });

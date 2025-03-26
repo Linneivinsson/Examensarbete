@@ -86,12 +86,26 @@ function ControlQuestionsView({ formData, onChange, onSubmit }) {
           </div>
 
           <div className="form-group">
-            <label htmlFor="computerVolume">Vilken ljudnivå hade du på din dator under testerna?</label>
+            <label htmlFor="clearVolume">Kunde du höra ljuden tydligt?</label>
+            <select
+              id="clearVolume"
+              name="clearVolume"
+              value={formData.clearVolume}
+              onChange={onChange}
+              className="user-input"
+            >
+              <option value="">Välj</option>
+              <option value="Ja">Ja</option>
+              <option value="Nej">Nej</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label htmlFor="volumeChange">Ändrade du volymen någon gång under testet, om ja, under vilket test?</label>
             <input
-              id="computerVolume"
-              name="computerVolume"
+              id="volumeChange"
+              name="volumeChange"
               type="text"
-              value={formData.computerVolume}
+              value={formData.volumeChange}
               onChange={onChange}
               className="user-input"
             />

@@ -1,7 +1,30 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import "../style.css"; // Importera CSS-filen
 
 function StartView({ onNavigateToLogin }) {
+    const audioRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const toggleAudio = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (isPlaying) {
+      audio.pause();
+    } else {
+      audio.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+
+  const handleStartClick = () => {
+    const audio = audioRef.current;
+    if (audio && !audio.paused) {
+      audio.pause(); // Pausa ljud om det spelas
+      setIsPlaying(false);
+    }
+    onNavigateToLogin(); // Navigera till test
+  };
+
   return (
     <div className="start-container">
       <h1 className="start-title">Instruktioner för Testet</h1>
@@ -24,13 +47,20 @@ function StartView({ onNavigateToLogin }) {
 
       <h2 className="section-title">Innan du börjar testet:</h2>
       <ul className="start-list">
-      <li>Se till så att du redan innan du börjar testet har ljudet påslaget på datorn, gärna på medelvolym</li>
         <li>Se till att ha samma ljudnivå på datorn för alla testerna.</li>
         <li>Använd hörlurar för att säkerställa att du hör ljudmiljöerna tydligt.</li>
         <li>Välj en lugn miljö för att minimera störningar utanför själva testet.</li>
         <li>Fokusera på att vara snabb, men noggrann!</li>
       </ul>
 
+      <h2 className="section-title">Testa ljudvolym</h2>
+      <p>Lyssna på ljuden nedan, och hitta ett bekvämt volymläge.</p>
+      <div className="audio-player">
+        <audio ref={audioRef} src="public/noise/testsound.mp3" />
+        <button className="starttest-button" onClick={toggleAudio}>
+          {isPlaying ? "⏸ Pausa ljud" : "▶ Spela upp ljud"}
+        </button>
+      </div>
       <div className="button-container">
         <button className="starttest-button" onClick={onNavigateToLogin}>
           Starta testet
@@ -39,5 +69,4 @@ function StartView({ onNavigateToLogin }) {
     </div>
   );
 }
-
 export { StartView };

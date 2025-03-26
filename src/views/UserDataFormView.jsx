@@ -72,7 +72,7 @@ function UserDataFormView({ formData, onChange, onSubmit }) {
 
           {/* År på KTH */}
           <div className="form-group">
-            <label htmlFor="year">År på KTH:</label>
+            <label htmlFor="year">Läsår på KTH:</label>
             <select
               id="year"
               name="year"
