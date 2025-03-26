@@ -21,17 +21,6 @@ function StartView({ onNavigateToLogin }) {
         
       </ul>
 
-      <h2 className="section-title">Ljudmiljöer under testet</h2>
-      <ul className="start-list">
-        <li><strong>Test 1-4:</strong> Slumpade ljudmiljöer:
-          <ul className="start-sublist">
-          <li>Tyst ljudmiljö</li>
-            <li>Låg entropi (enkel och repetitiv musik)</li>
-            <li>Medelhög entropi (måttligt komplex musik)</li>
-            <li>Hög entropi (komplex och varierad musik)</li>
-          </ul>
-        </li>
-      </ul>
 
       <h2 className="section-title">Så här ser testet ut:</h2>
       <div className="image-container">
