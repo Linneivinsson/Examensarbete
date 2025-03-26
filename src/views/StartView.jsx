@@ -4,13 +4,7 @@ import "../style.css"; // Importera CSS-filen
 function StartView({ onNavigateToLogin }) {
   return (
     <div className="start-container">
-      <h1 className="start-title">Instruktioner för Testet – Musikens Entropi och Omedelbar Koncentration</h1>
-      <p className="start-description">
-      Detta test syftar till att undersöka hur ljud med olika entropi påverkar
-      direkt koncentration och prestation vid kortare uppgifter. Du kommer att genomföra
-    samma test i fyra olika ljudmiljöer, varav en är tyst. Syftet är att se ett samband mellan musikens entropi
-    och omedelbar koncentration för att kunna optimera ljudmiljön för bästa fokus. 
-      </p>
+      <h1 className="start-title">Instruktioner för Testet</h1>
 
       <h2 className="section-title">Så går testet till</h2>
       <ul className="start-list">
