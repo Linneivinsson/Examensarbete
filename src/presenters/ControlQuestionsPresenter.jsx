@@ -5,7 +5,7 @@ import { ControlQuestionsView } from "../views/ControlQuestionsView.jsx";
 function ControlQuestionsPresenter({ model }) {
   const [controlData, setControlData] = useState({
     usedHeadphones: "",
-    testEnvironment: "",
+    infoEnvironment: "",
     computerVolume: "",
   });
 
